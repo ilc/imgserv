@@ -44,15 +44,13 @@ def get_datasets():
     return [f for f in os.listdir(DS_DIR) if os.path.isdir(os.path.join(DS_DIR,f)) and not (f == '.' or f == '..')]
 
 def uuid_to_img(uuid):
-	return convert_ds_to_img(uuid_to_ds(uuid))
+    return convert_ds_to_img(uuid_to_ds(uuid))
 
 def uuid_to_ds(uuid):
-        return json.loads(open(DS_DIR+"/"+uuid+"/manifest", 'r').read())
-# Note, only bzip2 encoding is supported at the moment, more encodings 
-# won't be hard to support, just time
+    return json.loads(open(DS_DIR+"/"+uuid+"/manifest", 'r').read())
 
 def convert_ds_to_img(js):
-    return { 'v': 2, 'uuid': js['uuid'], 'urn': js['urn'], 'owner': js['creator_uuid'], 'name': js['name'], 'version': js['version'], 'description': js['description'], 'homepage': 'http://www.samba.org/', 'state':'active', 'public':True, 'published_at': js['published_at'], 'type': js['type'], 'os': js['os'], 'files': [{ 'sha1':js['files'][0]['sha1'], 'size':js['files'][0]['size'], 'compression': 'bzip2'}]}
+    return { 'v': 2, 'uuid': js['uuid'], 'urn': js['urn'], 'owner': js['creator_uuid'], 'name': js['name'], 'version': js['version'], 'description': js['description'], 'homepage': 'http://www.samba.org/', 'state':'active', 'public':True, 'published_at': js['published_at'], 'type': js['type'], 'os': js['os'], 'files': [{ 'sha1': js['files'][0]['sha1'], 'size': js['files'][0]['size'], 'compression': ('bzip2' if js['files'][0]['path'][-3:] == 'bz2' else 'gzip')}]}
 
 @route('/ping')
 def index():
