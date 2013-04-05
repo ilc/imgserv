@@ -44,10 +44,10 @@ def get_datasets():
     return [f for f in os.listdir(DS_DIR) if os.path.isdir(os.path.join(DS_DIR,f)) and not (f == '.' or f == '..')]
 
 def uuid_to_img(uuid):
-	return convert_ds_to_img(uuid_to_ds(uuid))
+    return convert_ds_to_img(uuid_to_ds(uuid))
 
 def uuid_to_ds(uuid):
-        return json.loads(open(DS_DIR+"/"+uuid+"/manifest", 'r').read())
+    return json.loads(open(DS_DIR+"/"+uuid+"/manifest", 'r').read())
 # Note, only bzip2 encoding is supported at the moment, more encodings 
 # won't be hard to support, just time
 
